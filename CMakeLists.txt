@@ -8,24 +8,28 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(CMAKE_CUDA_ARCHITECTURES 75 86)
+set(CMAKE_CUDA_ARCHITECTURES 86)
 
-if(WIN32)
-    set(CMAKE_PREFIX_PATH "C:/Qt/6.9.1/msvc2019_64/lib/cmake")
-elseif(UNIX)
+if(UNIX)
     set(CMAKE_PREFIX_PATH "/home/damiand/Qt/6.9.1/gcc_64/lib/cmake")
+elseif(WIN32)
+    set(CMAKE_PREFIX_PATH "C:/Qt/6.9.1/msvc2019_64/lib/cmake")
 endif()
 
 find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
 find_package(CUDAToolkit REQUIRED)
 find_package(OpenCV REQUIRED)
 
-add_executable(VideoPlayerCuda main.cpp cuda/test.cu)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+add_executable(VideoPlayerCuda main.cpp cuda/test.cu )
+
+set_source_files_properties(cuda/test.cu PROPERTIES LANGUAGE CUDA)
 
 target_link_libraries(VideoPlayerCuda PRIVATE
-        Qt::Core
-        Qt::Gui
-        Qt::Widgets
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
         CUDA::cudart
         ${OpenCV_LIBS}
 )

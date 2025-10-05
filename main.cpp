@@ -1,16 +1,13 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QLabel>
 #include <QWidget>
 #include <QVBoxLayout>
-#include <iostream>
-extern "C" void addCuda(int a, int b, int *c);
+
+extern "C" int addNumbers();
 
 int main(int argc, char *argv[]) {
-
-    int result;
-    addCuda(2, 3, &result);
-    std::cout << "Result from CUDA: " << result << std::endl;
 
     QApplication a(argc, argv);
     QMainWindow main_window;
@@ -37,6 +34,12 @@ int main(int argc, char *argv[]) {
     );
 
     layout->addWidget(play_button);
+
+    int result = addNumbers();
+    QLabel *label = new QLabel(QString::number(result));
+    label->setStyleSheet("color: white; font-size: 18px;");
+    layout->addWidget(label);
+
 
     main_window.setStyleSheet(
         "QMainWindow {"
