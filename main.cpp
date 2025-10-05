@@ -3,8 +3,15 @@
 #include <QPushButton>
 #include <QWidget>
 #include <QVBoxLayout>
+#include <iostream>
+extern "C" void addCuda(int a, int b, int *c);
 
 int main(int argc, char *argv[]) {
+
+    int result;
+    addCuda(2, 3, &result);
+    std::cout << "Result from CUDA: " << result << std::endl;
+
     QApplication a(argc, argv);
     QMainWindow main_window;
     main_window.setWindowTitle("Video Player");

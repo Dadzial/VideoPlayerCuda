@@ -20,7 +20,7 @@ find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
 find_package(CUDAToolkit REQUIRED)
 find_package(OpenCV REQUIRED)
 
-add_executable(VideoPlayerCuda main.cpp)
+add_executable(VideoPlayerCuda main.cpp cuda/test.cu)
 
 target_link_libraries(VideoPlayerCuda PRIVATE
         Qt::Core
